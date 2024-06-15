@@ -1,3 +1,5 @@
+import { Avatar } from './Avatar';
+import { Comment } from './Comment';
 import styles from './Post.module.css';
 
 export function Post(props) {
@@ -5,7 +7,7 @@ export function Post(props) {
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <img className={styles.avatar} src="https://github.com/yuriipoquini.png" />
+                    <Avatar src="https://github.com/yuriipoquini.png"/>
                     <div className={styles.authorInfo}>
                         <strong>Yuri Poquini</strong>
                         <span>Dev</span>
@@ -23,6 +25,20 @@ export function Post(props) {
                 <p>Rolou pra trás lucas vasquez</p>
                 <strong>BUFOOONNNNN</strong>
                 <p>CRISTIANO DE BICICLETA MINHA NOSSA</p>
+            </div>
+
+            <form className={styles.commentForm}>
+                <strong>Deixe seu feedback</strong>
+
+                <textarea placeholder='Deixe um Comentário'/>
+
+                <button type='submit'>Comentar</button>
+            </form>
+
+            <div className={styles.commentList}>
+                <Comment />
+                <Comment />
+                <Comment />
             </div>
         </article>
     )
