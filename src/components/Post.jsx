@@ -1,30 +1,45 @@
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
+
 import { Avatar } from './Avatar';
 import { Comment } from './Comment';
 import styles from './Post.module.css';
 
-export function Post(props) {
+export function Post({author, publishedAt, content}) {
+    const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
+        locale: ptBR,
+    });
+
+    const dateRelativeToNow = formatDistanceToNow(publishedAt, {
+        locale: ptBR,
+        addSuffix: true
+    })
+
     return(
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <Avatar src="https://github.com/yuriipoquini.png"/>
+                    <Avatar src={author.avatarUrl}/>
                     <div className={styles.authorInfo}>
-                        <strong>Yuri Poquini</strong>
-                        <span>Dev</span>
+                        <strong>{author.name}</strong>
+                        <span>{author.role}</span>
                     </div>
                 </div>
 
-                <time dateTime="2024-04-18 08:15:32">
-                    Publicado a 1h 
+                <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
+                    {dateRelativeToNow}
                 </time>
             </header>
 
             <div className={styles.content}>
-                <p>Marcelo, pro cristiano, olha iii iiii</p>
-                <p>Olha o cristiano, buffon desesperado</p>
-                <p>Rolou pra trás lucas vasquez</p>
-                <strong>BUFOOONNNNN</strong>
-                <p>CRISTIANO DE BICICLETA MINHA NOSSA</p>
+                {content.map(line => {
+                    if(line.type === 'paragraph'){
+                        return <p>{line.content}</p>;
+                    } else if (line.type === 'link'){
+                        return <p><a href='#'>Veja Agora</a></p>;
+                    }
+                })}
             </div>
 
             <form className={styles.commentForm}>

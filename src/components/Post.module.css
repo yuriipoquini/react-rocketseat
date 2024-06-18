@@ -18,6 +18,11 @@
     margin-top: 1rem
 }
 
+.content a {
+    color: var(--green-300);
+    text-decoration: none;
+}
+
 .post header{
     display: flex;
     align-items: center;
